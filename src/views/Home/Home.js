@@ -191,7 +191,7 @@ const Home = () => {
           <Card style={{ height: '100%' }}>
             <CardContent align="center" style={{ marginTop: '2.5%' }}>
               {/* <h2 style={{ marginBottom: '20px' }}>Wallet Balance</h2> */}
-              <Button color="primary" href="/masonry" variant="contained" style={{ marginRight: '10px' }}>
+              <Button color="primary" href="/lodge" variant="contained" style={{ marginRight: '10px' }}>
                 Stake Now
               </Button>
               <Button href="/cabin" variant="contained" style={{ marginRight: '10px' }}>

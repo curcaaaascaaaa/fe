@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import useFrostFinance from './useFrostFinance';
-import useStakedBalanceOnMasonry from './useStakedBalanceOnMasonry';
+import useStakedBalanceOnLodge from './useStakedBalanceOnLodge';
 
-const useMasonryVersion = () => {
-  const [masonryVersion, setMasonryVersion] = useState('latest');
+const useLodgeVersion = () => {
+  const [lodgeVersion, setLodgeVersion] = useState('latest');
   const frostFinance = useFrostFinance();
-  const stakedBalance = useStakedBalanceOnMasonry();
+  const stakedBalance = useStakedBalanceOnLodge();
 
   const updateState = useCallback(async () => {
-    setMasonryVersion(await frostFinance.fetchMasonryVersionOfUser());
+    setLodgeVersion(await frostFinance.fetchLodgeVersionOfUser());
   }, [frostFinance?.isUnlocked, stakedBalance]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const useMasonryVersion = () => {
     }
   }, [frostFinance?.isUnlocked, stakedBalance]);
 
-  return masonryVersion;
+  return lodgeVersion;
 };
 
-export default useMasonryVersion;
+export default useLodgeVersion;

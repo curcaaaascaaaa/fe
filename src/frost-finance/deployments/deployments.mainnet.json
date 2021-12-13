@@ -457,7 +457,7 @@
     ]
   },
   "SeigniorageOracle": {
-    "address": "0x55530fA1B042582D5FA3C313a7e02d21Af6B82f4",
+    "address": "0x4788C455CE1115F7d7eB318c002233B2De2Cb41f",
     "abi": [
       {
         "inputs": [
@@ -2996,7 +2996,7 @@
             "type": "uint256"
           }
         ],
-        "name": "MasonryFunded",
+        "name": "LodgeFunded",
         "type": "event"
       },
       {
@@ -3201,7 +3201,7 @@
       },
       {
         "inputs": [],
-        "name": "masonry",
+        "name": "lodge",
         "outputs": [
           {
             "internalType": "address",
@@ -3638,7 +3638,7 @@
           },
           {
             "internalType": "address",
-            "name": "_masonry",
+            "name": "_lodge",
             "type": "address"
           },
           {
@@ -3669,11 +3669,11 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_masonry",
+            "name": "_lodge",
             "type": "address"
           }
         ],
-        "name": "setMasonry",
+        "name": "setLodge",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -3954,7 +3954,7 @@
             "type": "address"
           }
         ],
-        "name": "masonrySetOperator",
+        "name": "lodgeSetOperator",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -3972,7 +3972,7 @@
             "type": "uint256"
           }
         ],
-        "name": "masonrySetLockUp",
+        "name": "lodgeSetLockUp",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -3985,7 +3985,7 @@
             "type": "uint256"
           }
         ],
-        "name": "masonryAllocateSeigniorage",
+        "name": "lodgeAllocateSeigniorage",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -4008,14 +4008,14 @@
             "type": "address"
           }
         ],
-        "name": "masonryGovernanceRecoverUnsupported",
+        "name": "lodgeGovernanceRecoverUnsupported",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
       }
     ]
   },
-  "Masonry": {
+  "Lodge": {
     "address": "0x8764DE60236C5843D9faEB1B638fbCE962773B67",
     "abi": [
       {
@@ -4153,7 +4153,7 @@
             "type": "uint256"
           }
         ],
-        "name": "masonryHistory",
+        "name": "lodgeHistory",
         "outputs": [
           {
             "internalType": "uint256",

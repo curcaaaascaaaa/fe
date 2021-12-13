@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useRefresh from '../useRefresh';
-import useFrostFinance from './../useFrostFinance';
+import useFrostFinance from '../useFrostFinance';
 
 const useClaimRewardCheck = () => {
   const { slowRefresh } = useRefresh();
@@ -11,7 +11,7 @@ const useClaimRewardCheck = () => {
   useEffect(() => {
     async function canUserClaimReward() {
       try {
-        setCanClaimReward(await frostFinance.canUserClaimRewardFromMasonry());
+        setCanClaimReward(await frostFinance.canUserClaimRewardFromLodge());
       } catch (err) {
         console.error(err);
       }

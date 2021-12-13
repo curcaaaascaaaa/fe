@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import useFrostFinance from './../useFrostFinance';
+import useFrostFinance from '../useFrostFinance';
 import { AllocationTime } from '../../frost-finance/types';
 
-const useUnstakeTimerMasonry = () => {
+const useUnstakeTimerLodge = () => {
   const [time, setTime] = useState<AllocationTime>({
     from: new Date(),
     to: new Date(),
@@ -17,4 +17,4 @@ const useUnstakeTimerMasonry = () => {
   return time;
 };
 
-export default useUnstakeTimerMasonry;
+export default useUnstakeTimerLodge;

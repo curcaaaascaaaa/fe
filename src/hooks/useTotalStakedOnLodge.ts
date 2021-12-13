@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import useFrostFinance from './useFrostFinance';
 import useRefresh from './useRefresh';
 
-const useTotalStakedOnMasonry = () => {
+const useTotalStakedOnLodge = () => {
   const [totalStaked, setTotalStaked] = useState(BigNumber.from(0));
   const frostFinance = useFrostFinance();
   const { slowRefresh } = useRefresh();
@@ -12,7 +12,7 @@ const useTotalStakedOnMasonry = () => {
   useEffect(() => {
     async function fetchTotalStaked() {
       try {
-        setTotalStaked(await frostFinance.getTotalStakedInMasonry());
+        setTotalStaked(await frostFinance.getTotalStakedInLodge());
       } catch (err) {
         console.error(err);
       }
@@ -25,4 +25,4 @@ const useTotalStakedOnMasonry = () => {
   return totalStaked;
 };
 
-export default useTotalStakedOnMasonry;
+export default useTotalStakedOnLodge;

@@ -15,28 +15,28 @@ import Value from '../../../components/Value';
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useModal from '../../../hooks/useModal';
 import useTokenBalance from '../../../hooks/useTokenBalance';
-import useWithdrawCheck from '../../../hooks/masonry/useWithdrawCheck';
+import useWithdrawCheck from '../../../hooks/lodge/useWithdrawCheck';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
 import useFrostFinance from '../../../hooks/useFrostFinance';
-import ProgressCountdown from './../components/ProgressCountdown';
-import useStakedBalanceOnMasonry from '../../../hooks/useStakedBalanceOnMasonry';
+import ProgressCountdown from './ProgressCountdown';
+import useStakedBalanceOnLodge from '../../../hooks/useStakedBalanceOnLodge';
 import useStakedTokenPriceInDollars from '../../../hooks/useStakedTokenPriceInDollars';
-import useUnstakeTimerMasonry from '../../../hooks/masonry/useUnstakeTimerMasonry';
+import useUnstakeTimerLodge from '../../../hooks/lodge/useUnstakeTimerLodge';
 import TokenSymbol from '../../../components/TokenSymbol';
-import useStakeToMasonry from '../../../hooks/useStakeToMasonry';
-import useWithdrawFromMasonry from '../../../hooks/useWithdrawFromMasonry';
+import useStakeToLodge from '../../../hooks/useStakeToLodge';
+import useWithdrawFromLodge from '../../../hooks/useWithdrawFromLodge';
 
 const Stake: React.FC = () => {
   const frostFinance = useFrostFinance();
-  const [approveStatus, approve] = useApprove(frostFinance.FSHARE, frostFinance.contracts.Masonry.address);
+  const [approveStatus, approve] = useApprove(frostFinance.FSHARE, frostFinance.contracts.Lodge.address);
 
   const tokenBalance = useTokenBalance(frostFinance.FSHARE);
-  const stakedBalance = useStakedBalanceOnMasonry();
-  const { from, to } = useUnstakeTimerMasonry();
+  const stakedBalance = useStakedBalanceOnLodge();
+  const { from, to } = useUnstakeTimerLodge();
 
   const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('FSHARE', frostFinance.FSHARE);
   const tokenPriceInDollars = useMemo(
@@ -48,9 +48,9 @@ const Stake: React.FC = () => {
   );
   // const isOldBoardroomMember = boardroomVersion !== 'latest';
 
-  const { onStake } = useStakeToMasonry();
-  const { onWithdraw } = useWithdrawFromMasonry();
-  const canWithdrawFromMasonry = useWithdrawCheck();
+  const { onStake } = useStakeToLodge();
+  const { onWithdraw } = useWithdrawFromLodge();
+  const canWithdrawFromLodge = useWithdrawCheck();
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
     <DepositModal
@@ -100,7 +100,7 @@ const Stake: React.FC = () => {
                 </Button>
               ) : (
                 <>
-                  <IconButton disabled={!canWithdrawFromMasonry} onClick={onPresentWithdraw}>
+                  <IconButton disabled={!canWithdrawFromLodge} onClick={onPresentWithdraw}>
                     <RemoveIcon />
                   </IconButton>
                   <StyledActionSpacer />
@@ -114,7 +114,7 @@ const Stake: React.FC = () => {
         </CardContent>
       </Card>
       <Box mt={2} style={{ color: '#FFF' }}>
-        {canWithdrawFromMasonry ? (
+        {canWithdrawFromLodge ? (
           ''
         ) : (
           <Card>

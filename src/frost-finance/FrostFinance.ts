@@ -27,7 +27,7 @@ export class FrostFinance {
   config: Configuration;
   contracts: { [name: string]: Contract };
   externalTokens: { [name: string]: ERC20 };
-  masonryVersionOfUser?: string;
+  lodgeVersionOfUser?: string;
 
   FROSTWAVAX_LP: Contract;
   FROST: ERC20;
@@ -77,11 +77,11 @@ export class FrostFinance {
     }
     this.FROSTWAVAX_LP = this.FROSTWAVAX_LP.connect(this.signer);
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
-    this.fetchMasonryVersionOfUser()
-      .then((version) => (this.masonryVersionOfUser = version))
+    this.fetchLodgeVersionOfUser()
+      .then((version) => (this.lodgeVersionOfUser = version))
       .catch((err) => {
-        console.error(`Failed to fetch masonry version: ${err.stack}`);
-        this.masonryVersionOfUser = 'latest';
+        console.error(`Failed to fetch lodge version: ${err.stack}`);
+        this.lodgeVersionOfUser = 'latest';
       });
   }
 
@@ -98,7 +98,7 @@ export class FrostFinance {
   async getFrostStat(): Promise<TokenStat> {
     const { FrostAvaxRewardPool, FrostAvaxLpFrostRewardPool, FrostAvaxLpFrostRewardPoolOld } = this.contracts;
     const supply = await this.FROST.totalSupply();
-    const frostRewardPoolSupply = await this.FROST.balanceOf(FrostAvaxRewardPool.address);
+    const frostRewardPoolSupply = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPool.address);
     const frostRewardPoolSupply2 = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPool.address);
     const frostRewardPoolSupplyOld = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPoolOld.address);
     const frostCirculatingSupply = supply
@@ -376,10 +376,10 @@ export class FrostFinance {
     }
 
     const FSHAREPrice = (await this.gefShareStat()).priceInDollars;
-    const masonryfShareBalanceOf = await this.FSHARE.balanceOf(this.currentMasonry().address);
-    const masonryTVL = Number(getDisplayBalance(masonryfShareBalanceOf, this.FSHARE.decimal)) * Number(FSHAREPrice);
+    const lodgefShareBalanceOf = await this.FSHARE.balanceOf(this.currentLodge().address);
+    const lodgeTVL = Number(getDisplayBalance(lodgefShareBalanceOf, this.FSHARE.decimal)) * Number(FSHAREPrice);
 
-    return totalValue + masonryTVL;
+    return totalValue + lodgeTVL;
   }
 
   /**
@@ -472,19 +472,19 @@ export class FrostFinance {
     return await pool.withdraw(poolId, userInfo.amount);
   }
 
-  async fetchMasonryVersionOfUser(): Promise<string> {
+  async fetchLodgeVersionOfUser(): Promise<string> {
     return 'latest';
   }
 
-  currentMasonry(): Contract {
-    if (!this.masonryVersionOfUser) {
+  currentLodge(): Contract {
+    if (!this.lodgeVersionOfUser) {
       //throw new Error('you must unlock the wallet to continue.');
     }
-    return this.contracts.Masonry;
+    return this.contracts.Lodge;
   }
 
-  isOldMasonryMember(): boolean {
-    return this.masonryVersionOfUser !== 'latest';
+  isOldLodgeMember(): boolean {
+    return this.lodgeVersionOfUser !== 'latest';
   }
 
   async getTokenPriceFromPancakeswap(tokenContract: ERC20): Promise<string> {
@@ -551,10 +551,10 @@ export class FrostFinance {
   //===================================================================
   //===================================================================
 
-  async getMasonryAPR() {
-    const Masonry = this.currentMasonry();
-    const latestSnapshotIndex = await Masonry.latestSnapshotIndex();
-    const lastHistory = await Masonry.masonryHistory(latestSnapshotIndex);
+  async getLodgeAPR() {
+    const Lodge = this.currentLodge();
+    const latestSnapshotIndex = await Lodge.latestSnapshotIndex();
+    const lastHistory = await Lodge.lodgeHistory(latestSnapshotIndex);
 
     const lastRewardsReceived = lastHistory[1];
 
@@ -564,85 +564,85 @@ export class FrostFinance {
 
     //Mgod formula
     const amountOfRewardsPerDay = epochRewardsPerShare * Number(FROSTPrice) * 4;
-    const masonryfShareBalanceOf = await this.FSHARE.balanceOf(Masonry.address);
-    const masonryTVL = Number(getDisplayBalance(masonryfShareBalanceOf, this.FSHARE.decimal)) * Number(FSHAREPrice);
-    const realAPR = ((amountOfRewardsPerDay * 100) / masonryTVL) * 365;
+    const lodgefShareBalanceOf = await this.FSHARE.balanceOf(Lodge.address);
+    const lodgeTVL = Number(getDisplayBalance(lodgefShareBalanceOf, this.FSHARE.decimal)) * Number(FSHAREPrice);
+    const realAPR = ((amountOfRewardsPerDay * 100) / lodgeTVL) * 365;
     return realAPR;
   }
 
   /**
-   * Checks if the user is allowed to retrieve their reward from the Masonry
+   * Checks if the user is allowed to retrieve their reward from the Lodge
    * @returns true if user can withdraw reward, false if they can't
    */
-  async canUserClaimRewardFromMasonry(): Promise<boolean> {
-    const Masonry = this.currentMasonry();
-    return await Masonry.canClaimReward(this.myAccount);
+  async canUserClaimRewardFromLodge(): Promise<boolean> {
+    const Lodge = this.currentLodge();
+    return await Lodge.canClaimReward(this.myAccount);
   }
 
   /**
-   * Checks if the user is allowed to retrieve their reward from the Masonry
+   * Checks if the user is allowed to retrieve their reward from the Lodge
    * @returns true if user can withdraw reward, false if they can't
    */
-  async canUserUnstakeFromMasonry(): Promise<boolean> {
-    const Masonry = this.currentMasonry();
-    const canWithdraw = await Masonry.canWithdraw(this.myAccount);
-    const stakedAmount = await this.getStakedSharesOnMasonry();
+  async canUserUnstakeFromLodge(): Promise<boolean> {
+    const Lodge = this.currentLodge();
+    const canWithdraw = await Lodge.canWithdraw(this.myAccount);
+    const stakedAmount = await this.getStakedSharesOnLodge();
     const notStaked = Number(getDisplayBalance(stakedAmount, this.FSHARE.decimal)) === 0;
     const result = notStaked ? true : canWithdraw;
     return result;
   }
 
-  async timeUntilClaimRewardFromMasonry(): Promise<BigNumber> {
-    // const Masonry = this.currentMasonry();
-    // const mason = await Masonry.masons(this.myAccount);
+  async timeUntilClaimRewardFromLodge(): Promise<BigNumber> {
+    // const Lodge = this.currentLodge();
+    // const mason = await Lodge.masons(this.myAccount);
     return BigNumber.from(0);
   }
 
-  async getTotalStakedInMasonry(): Promise<BigNumber> {
-    const Masonry = this.currentMasonry();
-    return await Masonry.totalSupply();
+  async getTotalStakedInLodge(): Promise<BigNumber> {
+    const Lodge = this.currentLodge();
+    return await Lodge.totalSupply();
   }
 
-  async stakeShareToMasonry(amount: string): Promise<TransactionResponse> {
-    if (this.isOldMasonryMember()) {
-      throw new Error("you're using old masonry. please withdraw and deposit the FSHARE again.");
+  async stakeShareToLodge(amount: string): Promise<TransactionResponse> {
+    if (this.isOldLodgeMember()) {
+      throw new Error("you're using old lodge. please withdraw and deposit the FSHARE again.");
     }
-    const Masonry = this.currentMasonry();
-    return await Masonry.stake(decimalToBalance(amount));
+    const Lodge = this.currentLodge();
+    return await Lodge.stake(decimalToBalance(amount));
   }
 
-  async getStakedSharesOnMasonry(): Promise<BigNumber> {
-    const Masonry = this.currentMasonry();
-    if (this.masonryVersionOfUser === 'v1') {
-      return await Masonry.gefShareOf(this.myAccount);
+  async getStakedSharesOnLodge(): Promise<BigNumber> {
+    const Lodge = this.currentLodge();
+    if (this.lodgeVersionOfUser === 'v1') {
+      return await Lodge.gefShareOf(this.myAccount);
     }
-    return await Masonry.balanceOf(this.myAccount);
+    return await Lodge.balanceOf(this.myAccount);
   }
 
-  async getEarningsOnMasonry(): Promise<BigNumber> {
-    const Masonry = this.currentMasonry();
-    if (this.masonryVersionOfUser === 'v1') {
-      return await Masonry.getCashEarningsOf(this.myAccount);
+  async getEarningsOnLodge(): Promise<BigNumber> {
+    const Lodge = this.currentLodge();
+    if (this.lodgeVersionOfUser === 'v1') {
+      return await Lodge.getCashEarningsOf(this.myAccount);
     }
-    return await Masonry.earned(this.myAccount);
+    return await Lodge.earned(this.myAccount);
   }
 
-  async withdrawShareFromMasonry(amount: string): Promise<TransactionResponse> {
-    const Masonry = this.currentMasonry();
-    return await Masonry.withdraw(decimalToBalance(amount));
+  async withdrawShareFromLodge(amount: string): Promise<TransactionResponse> {
+    const Lodge = this.currentLodge();
+    return await Lodge.withdraw(decimalToBalance(amount));
   }
 
-  async harvestCashFromMasonry(): Promise<TransactionResponse> {
-    const Masonry = this.currentMasonry();
-    if (this.masonryVersionOfUser === 'v1') {
-      return await Masonry.claimDividends();
+  async harvestCashFromLodge(): Promise<TransactionResponse> {
+    const Lodge = this.currentLodge();
+    if (this.lodgeVersionOfUser === 'v1') {
+      return await Lodge.claimDividends();
     }
-    return await Masonry.claimReward();
+    return await Lodge.claimReward();
   }
 
-  async exitFromMasonry(): Promise<TransactionResponse> {
-    const Masonry = this.currentMasonry();
-    return await Masonry.exit();
+  async exitFromLodge(): Promise<TransactionResponse> {
+    const Lodge = this.currentLodge();
+    return await Lodge.exit();
   }
 
   async getTreasuryNextAllocationTime(): Promise<AllocationTime> {
@@ -656,18 +656,18 @@ export class FrostFinance {
   /**
    * This method calculates and returns in a from to to format
    * the period the user needs to wait before being allowed to claim
-   * their reward from the masonry
+   * their reward from the lodge
    * @returns Promise<AllocationTime>
    */
   async getUserClaimRewardTime(): Promise<AllocationTime> {
-    const { Masonry, Treasury } = this.contracts;
-    const nextEpochTimestamp = await Masonry.nextEpochPoint(); //in unix timestamp
-    const currentEpoch = await Masonry.epoch();
-    const mason = await Masonry.masons(this.myAccount);
+    const { Lodge, Treasury } = this.contracts;
+    const nextEpochTimestamp = await Lodge.nextEpochPoint(); //in unix timestamp
+    const currentEpoch = await Lodge.epoch();
+    const mason = await Lodge.masons(this.myAccount);
     const startTimeEpoch = mason.epochTimerStart;
     const period = await Treasury.PERIOD();
     const periodInHours = period / 60 / 60; // 6 hours, period is displayed in seconds which is 21600
-    const rewardLockupEpochs = await Masonry.rewardLockupEpochs();
+    const rewardLockupEpochs = await Lodge.rewardLockupEpochs();
     const targetEpochForClaimUnlock = Number(startTimeEpoch) + Number(rewardLockupEpochs);
 
     const fromDate = new Date(Date.now());
@@ -689,21 +689,21 @@ export class FrostFinance {
   /**
    * This method calculates and returns in a from to to format
    * the period the user needs to wait before being allowed to unstake
-   * from the masonry
+   * from the lodge
    * @returns Promise<AllocationTime>
    */
   async getUserUnstakeTime(): Promise<AllocationTime> {
-    const { Masonry, Treasury } = this.contracts;
-    const nextEpochTimestamp = await Masonry.nextEpochPoint();
-    const currentEpoch = await Masonry.epoch();
-    const mason = await Masonry.masons(this.myAccount);
+    const { Lodge, Treasury } = this.contracts;
+    const nextEpochTimestamp = await Lodge.nextEpochPoint();
+    const currentEpoch = await Lodge.epoch();
+    const mason = await Lodge.masons(this.myAccount);
     const startTimeEpoch = mason.epochTimerStart;
     const period = await Treasury.PERIOD();
     const PeriodInHours = period / 60 / 60;
-    const withdrawLockupEpochs = await Masonry.withdrawLockupEpochs();
+    const withdrawLockupEpochs = await Lodge.withdrawLockupEpochs();
     const fromDate = new Date(Date.now());
     const targetEpochForClaimUnlock = Number(startTimeEpoch) + Number(withdrawLockupEpochs);
-    const stakedAmount = await this.getStakedSharesOnMasonry();
+    const stakedAmount = await this.getStakedSharesOnLodge();
     if (currentEpoch <= targetEpochForClaimUnlock && Number(stakedAmount) === 0) {
       return { from: fromDate, to: fromDate };
     } else if (targetEpochForClaimUnlock - currentEpoch === 1) {
@@ -783,16 +783,16 @@ export class FrostFinance {
 
     const treasuryDaoFundedFilter = Treasury.filters.DaoFundFunded();
     const treasuryDevFundedFilter = Treasury.filters.DevFundFunded();
-    const treasuryMasonryFundedFilter = Treasury.filters.MasonryFunded();
+    const treasuryLodgeFundedFilter = Treasury.filters.LodgeFunded();
     const boughfBondsFilter = Treasury.filters.BoughfBonds();
     const redeemBondsFilter = Treasury.filters.RedeemedBonds();
 
     let epochBlocksRanges: any[] = [];
-    let masonryFundEvents = await Treasury.queryFilter(treasuryMasonryFundedFilter);
+    let lodgeFundEvents = await Treasury.queryFilter(treasuryLodgeFundedFilter);
     var events: any[] = [];
-    masonryFundEvents.forEach(function callback(value, index) {
+    lodgeFundEvents.forEach(function callback(value, index) {
       events.push({ epoch: index + 1 });
-      events[index].masonryFund = getDisplayBalance(value.args[1]);
+      events[index].lodgeFund = getDisplayBalance(value.args[1]);
       if (index === 0) {
         epochBlocksRanges.push({
           index: index,

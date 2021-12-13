@@ -2,20 +2,17 @@ import { useCallback } from 'react';
 import useFrostFinance from './useFrostFinance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
-const useWithdrawFromMasonry = () => {
+const useStakeToLodge = () => {
   const frostFinance = useFrostFinance();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
-  const handleWithdraw = useCallback(
+  const handleStake = useCallback(
     (amount: string) => {
-      handleTransactionReceipt(
-        frostFinance.withdrawShareFromMasonry(amount),
-        `Withdraw ${amount} FSHARE from the masonry`,
-      );
+      handleTransactionReceipt(frostFinance.stakeShareToLodge(amount), `Stake ${amount} FSHARE to the lodge`);
     },
     [frostFinance, handleTransactionReceipt],
   );
-  return { onWithdraw: handleWithdraw };
+  return { onStake: handleStake };
 };
 
-export default useWithdrawFromMasonry;
+export default useStakeToLodge;

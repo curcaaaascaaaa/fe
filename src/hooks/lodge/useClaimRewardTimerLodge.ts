@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useFrostFinance from '../useFrostFinance';
 import { AllocationTime } from '../../frost-finance/types';
 
-const useClaimRewardTimerMasonry = () => {
+const useClaimRewardTimerLodge = () => {
   const [time, setTime] = useState<AllocationTime>({
     from: new Date(),
     to: new Date(),
@@ -17,4 +17,4 @@ const useClaimRewardTimerMasonry = () => {
   return time;
 };
 
-export default useClaimRewardTimerMasonry;
+export default useClaimRewardTimerLodge;

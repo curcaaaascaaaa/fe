@@ -1,6 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
+import Image from 'material-ui-image';
+import TitleImage from '../../assets/img/frozen-capital_txt-logo.png';
 import {
   AppBar,
   Box,
@@ -73,6 +75,17 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'none',
     },
   },
+  img: {
+    textDecoration: 'none',
+    color: '#ffffff',
+    'max-height': '72px',
+    'vertical-align': 'bottom',
+    height: 'auto',
+    width: 'auto',
+    '&:hover': {
+      textDecoration: 'none',
+    },
+  },
 }));
 
 const Nav = () => {
@@ -90,15 +103,16 @@ const Nav = () => {
   };
 
   return (
+    
     <AppBar position="sticky" elevation={0} className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         {matches ? (
           <>
             <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-              {/* <a className={ classes.brandLink } href="/">Frozen Capital</a> */}
               <Link to="/" color="inherit" className={classes.brandLink}>
-                Frozen Capital
+                <img src={TitleImage} className={classes.img}/>
               </Link>
+              {/* <Image src={TitleImage}/> */}
             </Typography>
             <Box mr={5}>
               <Link color="textPrimary" to="/" className={classes.link}>
@@ -107,7 +121,7 @@ const Nav = () => {
               <Link color="textPrimary" to="/cabin" className={classes.link}>
                 Cabin
               </Link>
-              <Link color="textPrimary" to="/masonry" className={classes.link}>
+              <Link color="textPrimary" to="/lodge" className={classes.link}>
                 Lodge
               </Link>
               <Link color="textPrimary" to="/pit" className={classes.link}>
@@ -163,7 +177,7 @@ const Nav = () => {
               <List>
                 <ListItemLink primary="Home" to="/" />
                 <ListItemLink primary="Cabin" to="/cabin" />
-                <ListItemLink primary="Masonry" to="/masonry" />
+                <ListItemLink primary="Lodge" to="/lodge" />
                 <ListItemLink primary="Pit" to="/pit" />
                 <ListItemLink primary="SBS" to="/sbs" />
                 <ListItemLink primary="Liquidity" to="/liquidity" />
