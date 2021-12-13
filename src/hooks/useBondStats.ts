@@ -12,8 +12,7 @@ const useBondStats = () => {
     async function fetchBondPrice() {
       try {
         setStat(await frostFinance.gefBondStat());
-      }
-      catch(err){
+      } catch (err) {
         console.error(err);
       }
     }

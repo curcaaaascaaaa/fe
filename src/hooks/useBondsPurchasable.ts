@@ -10,13 +10,12 @@ const useBondsPurchasable = () => {
 
   useEffect(() => {
     async function fetchBondsPurchasable() {
-        try {
-            setBalance(await frostFinance.gefBondsPurchasable());
-        }
-        catch(err) {
-            console.error(err);
-        }
+      try {
+        setBalance(await frostFinance.gefBondsPurchasable());
+      } catch (err) {
+        console.error(err);
       }
+    }
     fetchBondsPurchasable();
   }, [setBalance, frostFinance]);
 

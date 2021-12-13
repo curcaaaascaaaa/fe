@@ -1,4 +1,4 @@
-import React, { /*useCallback, useEffect, */useMemo, useState } from 'react';
+import React, { /*useCallback, useEffect, */ useMemo, useState } from 'react';
 import Page from '../../components/Page';
 import PitImage from '../../assets/img/pit.png';
 import { createGlobalStyle } from 'styled-components';
@@ -6,12 +6,12 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
 import UnlockWallet from '../../components/UnlockWallet';
 import PageHeader from '../../components/PageHeader';
-import { Box,/* Paper, Typography,*/ Button, Grid } from '@material-ui/core';
+import { Box, /* Paper, Typography,*/ Button, Grid } from '@material-ui/core';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
 import useFrostFinance from '../../hooks/useFrostFinance';
-import { getDisplayBalance/*, getBalance*/ } from '../../utils/formatBalance';
-import { BigNumber/*, ethers*/ } from 'ethers';
+import { getDisplayBalance /*, getBalance*/ } from '../../utils/formatBalance';
+import { BigNumber /*, ethers*/ } from 'ethers';
 import useSwapFBondToFShare from '../../hooks/FShareSwapper/useSwapFBondToFShare';
 import useApprove, { ApprovalState } from '../../hooks/useApprove';
 import useFShareSwapperStats from '../../hooks/FShareSwapper/useFShareSwapperStats';
@@ -42,31 +42,40 @@ const Sbs: React.FC = () => {
   const { onSwapFShare } = useSwapFBondToFShare();
   const fshareSwapperStat = useFShareSwapperStats(account);
 
-  const fshareBalance = useMemo(() => (fshareSwapperStat ? Number(fshareSwapperStat.fshareBalance) : 0), [fshareSwapperStat]);
-  const bondBalance = useMemo(() => (fshareSwapperStat ? Number(fshareSwapperStat.fbondBalance) : 0), [fshareSwapperStat]);
+  const fshareBalance = useMemo(
+    () => (fshareSwapperStat ? Number(fshareSwapperStat.fshareBalance) : 0),
+    [fshareSwapperStat],
+  );
+  const bondBalance = useMemo(
+    () => (fshareSwapperStat ? Number(fshareSwapperStat.fbondBalance) : 0),
+    [fshareSwapperStat],
+  );
 
   const handleFBondChange = async (e: any) => {
     if (e.currentTarget.value === '') {
       setFbondAmount('');
       setFshareAmount('');
-      return
+      return;
     }
     if (!isNumeric(e.currentTarget.value)) return;
     setFbondAmount(e.currentTarget.value);
     const updateFShareAmount = await frostFinance.estimateAmountOfFShare(e.currentTarget.value);
-    setFshareAmount(updateFShareAmount);  
+    setFshareAmount(updateFShareAmount);
   };
 
   const handleFBondSelectMax = async () => {
     setFbondAmount(String(bondBalance));
     const updateFShareAmount = await frostFinance.estimateAmountOfFShare(String(bondBalance));
-    setFshareAmount(updateFShareAmount); 
+    setFshareAmount(updateFShareAmount);
   };
 
   const handleFShareSelectMax = async () => {
     setFshareAmount(String(fshareBalance));
     const rateFSharePerFrost = (await frostFinance.getFShareSwapperStat(account)).rateFSharePerFrost;
-    const updateFBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateFSharePerFrost))).mul(Number(fshareBalance) * 1e6);
+    const updateFBondAmount = BigNumber.from(10)
+      .pow(30)
+      .div(BigNumber.from(rateFSharePerFrost))
+      .mul(Number(fshareBalance) * 1e6);
     setFbondAmount(getDisplayBalance(updateFBondAmount, 18, 6));
   };
 
@@ -75,14 +84,17 @@ const Sbs: React.FC = () => {
     if (inputData === '') {
       setFshareAmount('');
       setFbondAmount('');
-      return
+      return;
     }
     if (!isNumeric(inputData)) return;
     setFshareAmount(inputData);
     const rateFSharePerFrost = (await frostFinance.getFShareSwapperStat(account)).rateFSharePerFrost;
-    const updateFBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateFSharePerFrost))).mul(Number(inputData) * 1e6);
+    const updateFBondAmount = BigNumber.from(10)
+      .pow(30)
+      .div(BigNumber.from(rateFSharePerFrost))
+      .mul(Number(inputData) * 1e6);
     setFbondAmount(getDisplayBalance(updateFBondAmount, 18, 6));
-  }
+  };
 
   return (
     <Switch>
@@ -123,7 +135,7 @@ const Sbs: React.FC = () => {
                         </CardContent>
                       </Card>
                     </StyledCardWrapper>
-                    <Spacer size="lg"/>
+                    <Spacer size="lg" />
                     <StyledCardWrapper>
                       <Card>
                         <CardContent>
@@ -149,7 +161,6 @@ const Sbs: React.FC = () => {
                           </StyledCardContentInner>
                         </CardContent>
                       </Card>
-              
                     </StyledCardWrapper>
                   </StyledCardsWrapper>
                 </StyledBoardroom>
@@ -162,26 +173,26 @@ const Sbs: React.FC = () => {
                   <Card>
                     <CardContent>
                       <StyledApproveWrapper>
-                      {approveStatus !== ApprovalState.APPROVED ? (
-                        <Button
-                          disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-                          color="primary"
-                          variant="contained"
-                          onClick={approve}
-                          size="medium"
-                        >
-                          Approve FBOND
-                        </Button>
-                      ) : (
-                        <Button
-                          color="primary"
-                          variant="contained"
-                          onClick={() => onSwapFShare(fbondAmount.toString())}
-                          size="medium"
-                        >
-                          Swap
-                        </Button>
-                      )}
+                        {approveStatus !== ApprovalState.APPROVED ? (
+                          <Button
+                            disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                            color="primary"
+                            variant="contained"
+                            onClick={approve}
+                            size="medium"
+                          >
+                            Approve FBOND
+                          </Button>
+                        ) : (
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={() => onSwapFShare(fbondAmount.toString())}
+                            size="medium"
+                          >
+                            Swap
+                          </Button>
+                        )}
                       </StyledApproveWrapper>
                     </CardContent>
                   </Card>

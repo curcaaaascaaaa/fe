@@ -3,7 +3,7 @@ import useRefresh from '../useRefresh';
 import useFrostFinance from './../useFrostFinance';
 
 const useClaimRewardCheck = () => {
-  const  { slowRefresh } = useRefresh();
+  const { slowRefresh } = useRefresh();
   const [canClaimReward, setCanClaimReward] = useState(false);
   const frostFinance = useFrostFinance();
   const isUnlocked = frostFinance?.isUnlocked;
@@ -12,9 +12,9 @@ const useClaimRewardCheck = () => {
     async function canUserClaimReward() {
       try {
         setCanClaimReward(await frostFinance.canUserClaimRewardFromMasonry());
-      } catch(err){
+      } catch (err) {
         console.error(err);
-      };
+      }
     }
     if (isUnlocked) {
       canUserClaimReward();

@@ -10,10 +10,9 @@ const useLpStats = (lpTicker: string) => {
 
   useEffect(() => {
     async function fetchLpPrice() {
-      try{
+      try {
         setStat(await frostFinance.getLPStat(lpTicker));
-      }
-      catch(err){
+      } catch (err) {
         console.error(err);
       }
     }

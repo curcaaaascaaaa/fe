@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import useFrostFinance from './useFrostFinance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 import { parseUnits } from 'ethers/lib/utils';
-import { TAX_OFFICE_ADDR } from '../utils/constants'
+import { TAX_OFFICE_ADDR } from '../utils/constants';
 
 const useProvideFrostAvaxLP = () => {
   const frostFinance = useFrostFinance();

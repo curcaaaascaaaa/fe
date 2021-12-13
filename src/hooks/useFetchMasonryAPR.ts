@@ -5,17 +5,17 @@ import useRefresh from './useRefresh';
 const useFetchMasonryAPR = () => {
   const [apr, setApr] = useState<number>(0);
   const frostFinance = useFrostFinance();
-  const { slowRefresh } = useRefresh(); 
+  const { slowRefresh } = useRefresh();
 
   useEffect(() => {
     async function fetchMasonryAPR() {
       try {
         setApr(await frostFinance.getMasonryAPR());
-      } catch(err){
+      } catch (err) {
         console.error(err);
       }
     }
-   fetchMasonryAPR();
+    fetchMasonryAPR();
   }, [setApr, frostFinance, slowRefresh]);
 
   return apr;

@@ -80,11 +80,12 @@ code {
   color: #757ce8 !important;
 }
 
-.MuiAlert-filledWarning{
+.MuiAlert-filledWarning {
   background-color: #e84142 !important;
 }
 
-.MuiAlert-message, .MuiAlert-icon{
+.MuiAlert-message,
+.MuiAlert-icon {
   color: white;
 }
 

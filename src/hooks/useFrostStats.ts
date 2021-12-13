@@ -9,12 +9,11 @@ const useFrostStats = () => {
   const frostFinance = useFrostFinance();
 
   useEffect(() => {
-    async function fetchFrostPrice(){
+    async function fetchFrostPrice() {
       try {
         setStat(await frostFinance.getFrostStat());
-      }
-      catch(err){
-        console.error(err)
+      } catch (err) {
+        console.error(err);
       }
     }
     fetchFrostPrice();

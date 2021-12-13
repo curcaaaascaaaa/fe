@@ -13,12 +13,12 @@ const useTotalStakedOnMasonry = () => {
     async function fetchTotalStaked() {
       try {
         setTotalStaked(await frostFinance.getTotalStakedInMasonry());
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     }
     if (isUnlocked) {
-     fetchTotalStaked();
+      fetchTotalStaked();
     }
   }, [isUnlocked, slowRefresh, frostFinance]);
 

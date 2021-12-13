@@ -40,7 +40,10 @@ const ProvideLiquidity = () => {
 
   const frostLPStats = useMemo(() => (frostAvaxLpStats ? frostAvaxLpStats : null), [frostAvaxLpStats]);
   const frostPriceInAVAX = useMemo(() => (frostStats ? Number(frostStats.tokenInAvax).toFixed(2) : null), [frostStats]);
-  const avaxPriceInFROST = useMemo(() => (frostStats ? Number(1 / frostStats.tokenInAvax).toFixed(2) : null), [frostStats]);
+  const avaxPriceInFROST = useMemo(
+    () => (frostStats ? Number(1 / frostStats.tokenInAvax).toFixed(2) : null),
+    [frostStats],
+  );
   // const classes = useStyles();
 
   const handleFrostChange = async (e) => {
@@ -87,7 +90,13 @@ const ProvideLiquidity = () => {
       <Grid container justify="center">
         <Box style={{ width: '600px' }}>
           <Alert variant="filled" severity="warning" style={{ marginBottom: '10px' }}>
-            <b>This and <a href="https://traderjoexyz.com/"  rel="noopener noreferrer" target="_blank">Traderjoe</a> are the only ways to provide Liquidity on FROST-AVAX pair without paying tax.</b>
+            <b>
+              This and{' '}
+              <a href="https://traderjoexyz.com/" rel="noopener noreferrer" target="_blank">
+                Traderjoe
+              </a>{' '}
+              are the only ways to provide Liquidity on FROST-AVAX pair without paying tax.
+            </b>
           </Alert>
           <Grid item xs={12} sm={12}>
             <Paper>

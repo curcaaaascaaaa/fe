@@ -12,8 +12,8 @@ const useShareStats = () => {
     async function fetchSharePrice() {
       try {
         setStat(await frostFinance.gefShareStat());
-      } catch(err){
-        console.error(err)
+      } catch (err) {
+        console.error(err);
       }
     }
     fetchSharePrice();

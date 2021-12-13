@@ -11,8 +11,7 @@ const useTotalValueLocked = () => {
     async function fetchTVL() {
       try {
         setTotalValueLocked(await frostFinance.getTotalValueLocked());
-      }
-      catch(err){
+      } catch (err) {
         console.error(err);
       }
     }

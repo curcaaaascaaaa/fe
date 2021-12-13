@@ -6,13 +6,13 @@ import useRefresh from './useRefresh';
 const useCurrentEpoch = () => {
   const [currentEpoch, setCurrentEpoch] = useState<BigNumber>(BigNumber.from(0));
   const frostFinance = useFrostFinance();
-  const { slowRefresh } = useRefresh(); 
+  const { slowRefresh } = useRefresh();
 
   useEffect(() => {
-    async function fetchCurrentEpoch () {
+    async function fetchCurrentEpoch() {
       try {
         setCurrentEpoch(await frostFinance.getCurrentEpoch());
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     }

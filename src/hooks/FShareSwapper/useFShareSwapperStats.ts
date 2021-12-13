@@ -5,17 +5,16 @@ import useRefresh from '../useRefresh';
 
 const useFShareSwapperStats = (account: string) => {
   const [stat, setStat] = useState<FShareSwapperStat>();
-  const { fastRefresh/*, slowRefresh*/ } = useRefresh();
+  const { fastRefresh /*, slowRefresh*/ } = useRefresh();
   const frostFinance = useFrostFinance();
 
   useEffect(() => {
     async function fetchFShareSwapperStat() {
-      try{
-        if(frostFinance.myAccount) {
+      try {
+        if (frostFinance.myAccount) {
           setStat(await frostFinance.getFShareSwapperStat(account));
         }
-      }
-      catch(err){
+      } catch (err) {
         console.error(err);
       }
     }

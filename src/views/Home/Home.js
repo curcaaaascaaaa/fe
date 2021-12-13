@@ -70,33 +70,40 @@ const Home = () => {
 
   const frostLPStats = useMemo(() => (frostAvaxLpStats ? frostAvaxLpStats : null), [frostAvaxLpStats]);
   const fshareLPStats = useMemo(() => (fShareAvaxLpStats ? fShareAvaxLpStats : null), [fShareAvaxLpStats]);
-  const frostPriceInDollars = useMemo(() => (frostStats ? Number(frostStats.priceInDollars).toFixed(2) : null), [
-    frostStats,
-  ]);
+  const frostPriceInDollars = useMemo(
+    () => (frostStats ? Number(frostStats.priceInDollars).toFixed(2) : null),
+    [frostStats],
+  );
   const frostPriceInAVAX = useMemo(() => (frostStats ? Number(frostStats.tokenInAvax).toFixed(4) : null), [frostStats]);
-  const frostCirculatingSupply = useMemo(() => (frostStats ? String(frostStats.circulatingSupply) : null), [
-    frostStats,
-  ]);
+  const frostCirculatingSupply = useMemo(
+    () => (frostStats ? String(frostStats.circulatingSupply) : null),
+    [frostStats],
+  );
   const frostTotalSupply = useMemo(() => (frostStats ? String(frostStats.totalSupply) : null), [frostStats]);
 
-  const fSharePriceInDollars = useMemo(() => (fShareStats ? Number(fShareStats.priceInDollars).toFixed(2) : null), [
-    fShareStats,
-  ]);
-  const fSharePriceInAVAX = useMemo(() => (fShareStats ? Number(fShareStats.tokenInAvax).toFixed(4) : null), [
-    fShareStats,
-  ]);
-  const fShareCirculatingSupply = useMemo(() => (fShareStats ? String(fShareStats.circulatingSupply) : null), [
-    fShareStats,
-  ]);
+  const fSharePriceInDollars = useMemo(
+    () => (fShareStats ? Number(fShareStats.priceInDollars).toFixed(2) : null),
+    [fShareStats],
+  );
+  const fSharePriceInAVAX = useMemo(
+    () => (fShareStats ? Number(fShareStats.tokenInAvax).toFixed(4) : null),
+    [fShareStats],
+  );
+  const fShareCirculatingSupply = useMemo(
+    () => (fShareStats ? String(fShareStats.circulatingSupply) : null),
+    [fShareStats],
+  );
   const fShareTotalSupply = useMemo(() => (fShareStats ? String(fShareStats.totalSupply) : null), [fShareStats]);
 
-  const fBondPriceInDollars = useMemo(() => (fBondStats ? Number(fBondStats.priceInDollars).toFixed(2) : null), [
-    fBondStats,
-  ]);
+  const fBondPriceInDollars = useMemo(
+    () => (fBondStats ? Number(fBondStats.priceInDollars).toFixed(2) : null),
+    [fBondStats],
+  );
   const fBondPriceInAVAX = useMemo(() => (fBondStats ? Number(fBondStats.tokenInAvax).toFixed(4) : null), [fBondStats]);
-  const fBondCirculatingSupply = useMemo(() => (fBondStats ? String(fBondStats.circulatingSupply) : null), [
-    fBondStats,
-  ]);
+  const fBondCirculatingSupply = useMemo(
+    () => (fBondStats ? String(fBondStats.circulatingSupply) : null),
+    [fBondStats],
+  );
   const fBondTotalSupply = useMemo(() => (fBondStats ? String(fBondStats.totalSupply) : null), [fBondStats]);
 
   const frostLpZap = useZap({ depositTokenName: 'FROST-AVAX-LP' });

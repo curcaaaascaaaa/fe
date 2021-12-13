@@ -755,7 +755,12 @@ export class FrostFinance {
     let overrides = {
       value: parseUnits(avaxAmount, 18),
     };
-    return await TaxOffice.addLiquidityETHTaxFree(frostAmount, frostAmount.mul(992).div(1000), parseUnits(avaxAmount, 18).mul(992).div(1000), overrides);
+    return await TaxOffice.addLiquidityETHTaxFree(
+      frostAmount,
+      frostAmount.mul(992).div(1000),
+      parseUnits(avaxAmount, 18).mul(992).div(1000),
+      overrides,
+    );
   }
 
   async quoteFromTraderJoe(tokenAmount: string, tokenName: string): Promise<string> {

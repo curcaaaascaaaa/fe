@@ -3,7 +3,6 @@ import useFrostFinance from './useFrostFinance';
 import { AllocationTime } from '../frost-finance/types';
 import useRefresh from './useRefresh';
 
-
 const useTreasuryAllocationTimes = () => {
   const { slowRefresh } = useRefresh();
   const [time, setTime] = useState<AllocationTime>({

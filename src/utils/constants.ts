@@ -1,4 +1,4 @@
-import { ROUTER_ADDRESS, ZAP_ADDRESS, ChainId } from "@traderjoe-xyz/sdk";
+import { ROUTER_ADDRESS, ZAP_ADDRESS, ChainId } from '@traderjoe-xyz/sdk';
 
 export const FROST_TICKER = 'FROST';
 export const FSHARE_TICKER = 'FSHARE';

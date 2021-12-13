@@ -6,13 +6,13 @@ import useRefresh from './useRefresh';
 const useCashPriceInEstimatedTWAP = () => {
   const [stat, setStat] = useState<TokenStat>();
   const frostFinance = useFrostFinance();
-  const { slowRefresh } = useRefresh(); 
+  const { slowRefresh } = useRefresh();
 
   useEffect(() => {
     async function fetchCashPrice() {
       try {
         setStat(await frostFinance.getFrostStatInEstimatedTWAP());
-      }catch(err) {
+      } catch (err) {
         console.error(err);
       }
     }
