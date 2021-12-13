@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Page from '../../components/Page';
 import HomeImage from '../../assets/img/home-avax.png';
-import CashImage from '../../assets/img/crypto_snow_cash.svg';
+import CashImage from '../../assets/img/frozen-capital_logo_snow-glow.png';
 import Image from 'material-ui-image';
 import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
@@ -112,7 +112,7 @@ const Home = () => {
   const StyledLink = styled.a`
     font-weight: 700;
     text-decoration: none;
-    color: hotpink;
+    color: #092E48;
   `;
 
   const [onPresentFrostZap, onDissmissFrostZap] = useModal(
@@ -146,7 +146,7 @@ const Home = () => {
         {/* Logo */}
         <Grid container item xs={12} sm={4} justify="center">
           {/* <Paper>xs=6 sm=3</Paper> */}
-          <Image color="none" style={{ width: '300px', paddingTop: '0px' }} src={CashImage} />
+          <Image color="none" style={{ width: '260px', 'object-fit': 'cover', paddingTop: '0px' }} src={CashImage} />
         </Grid>
         {/* Explanation text */}
         <Grid item xs={12} sm={8}>

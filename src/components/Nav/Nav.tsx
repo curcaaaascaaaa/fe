@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     color: '#ffffff',
-    'background-color': '#e84142',
+    'background-color': '#044878',
     // borderBottom: `1px solid ${theme.palette.divider}`,
     padding: '10px',
     marginBottom: '3rem',
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   img: {
     textDecoration: 'none',
     color: '#ffffff',
-    'max-height': '72px',
+    'max-height': '44px',
     'vertical-align': 'bottom',
     height: 'auto',
     width: 'auto',
@@ -124,8 +124,8 @@ const Nav = () => {
               <Link color="textPrimary" to="/lodge" className={classes.link}>
                 Lodge
               </Link>
-              <Link color="textPrimary" to="/pit" className={classes.link}>
-                Pit
+              <Link color="textPrimary" to="/bonds" className={classes.link}>
+                Bonds
               </Link>
               <Link color="textPrimary" to="/sbs" className={classes.link}>
                 SBS
@@ -136,7 +136,7 @@ const Nav = () => {
               {/* <Link color="textPrimary" to="/regulations" className={classes.link}>
                 Regulations
               </Link> */}
-              <a href="https://docs.frost.finance" className={classes.link}>
+              <a href="https://docs.frozen.capital" className={classes.link}>
                 Docs
               </a>
             </Box>
@@ -154,7 +154,7 @@ const Nav = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Frozen Capital
+            <img src={TitleImage} className={classes.img}/>
             </Typography>
 
             <Drawer
@@ -178,11 +178,11 @@ const Nav = () => {
                 <ListItemLink primary="Home" to="/" />
                 <ListItemLink primary="Cabin" to="/cabin" />
                 <ListItemLink primary="Lodge" to="/lodge" />
-                <ListItemLink primary="Pit" to="/pit" />
+                <ListItemLink primary="Bonds" to="/bonds" />
                 <ListItemLink primary="SBS" to="/sbs" />
                 <ListItemLink primary="Liquidity" to="/liquidity" />
                 <ListItemLink primary="Regulations" to="/regulations" />
-                <ListItem button component="a" href="https://docs.frost.finance">
+                <ListItem button component="a" href="https://docs.frozen.capital">
                   <ListItemText>Docs</ListItemText>
                 </ListItem>
                 <ListItem style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

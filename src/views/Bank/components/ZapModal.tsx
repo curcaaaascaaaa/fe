@@ -88,12 +88,12 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
       </Typography>
 
       <StyledActionSpacer />
-      <InputLabel style={{ color: '#be0011' }} id="label">
+      <InputLabel style={{ color: '#092E48' }} id="label">
         Select asset to zap with
       </InputLabel>
       <Select
         onChange={handleChangeAsset}
-        style={{ color: '#be0011' }}
+        style={{ color: '#092E48' }}
         labelId="label"
         id="select"
         value={zappingToken}
@@ -157,10 +157,10 @@ const StyledDescriptionText = styled.div`
 const StyledMenuItem = withStyles({
   root: {
     backgroundColor: 'white',
-    color: '#be0011',
+    color: '#092E48',
     '&:hover': {
       backgroundColor: 'grey',
-      color: '#be0011',
+      color: '#092E48',
     },
     selected: {
       backgroundColor: 'black',

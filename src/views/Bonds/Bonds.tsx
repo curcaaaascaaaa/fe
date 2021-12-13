@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import Page from '../../components/Page';
-import PitImage from '../../assets/img/pit.png';
+import BondsImage from '../../assets/img/cabin-alt.png';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
@@ -21,12 +21,12 @@ import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../frost-finance/con
 
 const BackgroundImage = createGlobalStyle`
   body {
-    background: url(${PitImage}) no-repeat !important;
+    background: url(${BondsImage}) no-repeat !important;
     background-size: cover !important;
   }
 `;
 
-const Pit: React.FC = () => {
+const Bonds: React.FC = () => {
   const { path } = useRouteMatch();
   const { account } = useWallet();
   const frostFinance = useFrostFinance();
@@ -149,4 +149,4 @@ const StyledStatsWrapper = styled.div`
   }
 `;
 
-export default Pit;
+export default Bonds;

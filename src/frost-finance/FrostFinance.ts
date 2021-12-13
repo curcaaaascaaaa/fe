@@ -105,8 +105,8 @@ export class FrostFinance {
       .sub(frostRewardPoolSupply)
       .sub(frostRewardPoolSupply2)
       .sub(frostRewardPoolSupplyOld);
-    const priceInAVAX = await this.getTokenPriceFromPancakeswap(this.FROST);
-    const priceOfOneAVAX = await this.getWAVAXPriceFromPancakeswap();
+    const priceInAVAX = await this.getTokenPriceFromTraderJoe(this.FROST);
+    const priceOfOneAVAX = await this.getWAVAXPriceFromTraderJoe();
     const priceOfFrostInDollars = (Number(priceInAVAX) * Number(priceOfOneAVAX)).toFixed(2);
 
     return {
@@ -183,10 +183,10 @@ export class FrostFinance {
 
     const supply = await this.FSHARE.totalSupply();
 
-    const priceInAVAX = await this.getTokenPriceFromPancakeswap(this.FSHARE);
+    const priceInAVAX = await this.getTokenPriceFromTraderJoe(this.FSHARE);
     const frostRewardPoolSupply = await this.FSHARE.balanceOf(FrostAvaxLPFShareRewardPool.address);
     const fShareCirculatingSupply = supply.sub(frostRewardPoolSupply);
-    const priceOfOneAVAX = await this.getWAVAXPriceFromPancakeswap();
+    const priceOfOneAVAX = await this.getWAVAXPriceFromTraderJoe();
     const priceOfSharesInDollars = (Number(priceInAVAX) * Number(priceOfOneAVAX)).toFixed(2);
 
     return {
@@ -310,7 +310,7 @@ export class FrostFinance {
    */
   async getDepositTokenPriceInDollars(tokenName: string, token: ERC20) {
     let tokenPrice;
-    const priceOfOneAvaxInDollars = await this.getWAVAXPriceFromPancakeswap();
+    const priceOfOneAvaxInDollars = await this.getWAVAXPriceFromTraderJoe();
     if (tokenName === 'WAVAX') {
       tokenPrice = priceOfOneAvaxInDollars;
     } else {
@@ -321,7 +321,7 @@ export class FrostFinance {
       } else if (tokenName === 'SHIBA') {
         tokenPrice = await this.getTokenPriceFromSpiritswap(token);
       } else {
-        tokenPrice = await this.getTokenPriceFromPancakeswap(token);
+        tokenPrice = await this.getTokenPriceFromTraderJoe(token);
         tokenPrice = (Number(tokenPrice) * Number(priceOfOneAvaxInDollars)).toString();
       }
     }
@@ -487,7 +487,7 @@ export class FrostFinance {
     return this.lodgeVersionOfUser !== 'latest';
   }
 
-  async getTokenPriceFromPancakeswap(tokenContract: ERC20): Promise<string> {
+  async getTokenPriceFromTraderJoe(tokenContract: ERC20): Promise<string> {
     const ready = await this.provider.ready;
     if (!ready) return;
     const { chainId } = this.config;
@@ -521,7 +521,7 @@ export class FrostFinance {
       let avaxAmount = Number(getFullDisplayBalance(avaxBalanceInLP, WAVAX.decimal));
       let shibaBalanceInLP = await tokenContract.balanceOf(liquidityToken.address);
       let shibaAmount = Number(getFullDisplayBalance(shibaBalanceInLP, tokenContract.decimal));
-      const priceOfOneAvaxInDollars = await this.getWAVAXPriceFromPancakeswap();
+      const priceOfOneAvaxInDollars = await this.getWAVAXPriceFromTraderJoe();
       let priceOfShiba = (avaxAmount / shibaAmount) * Number(priceOfOneAvaxInDollars);
       return priceOfShiba.toString();
     } catch (err) {
@@ -529,7 +529,7 @@ export class FrostFinance {
     }
   }
 
-  async getWAVAXPriceFromPancakeswap(): Promise<string> {
+  async getWAVAXPriceFromTraderJoe(): Promise<string> {
     const ready = await this.provider.ready;
     if (!ready) return;
     const { WAVAX, USDTE } = this.externalTokens;
@@ -726,13 +726,13 @@ export class FrostFinance {
       let assetUrl;
       if (assetName === 'FROST') {
         asset = this.FROST;
-        assetUrl = 'https://frost.finance/presskit/frost_icon_noBG.png';
+        assetUrl = 'https://frozen.capital/presskit/frost_icon_noBG.png';
       } else if (assetName === 'FSHARE') {
         asset = this.FSHARE;
-        assetUrl = 'https://frost.finance/presskit/fshare_icon_noBG.png';
+        assetUrl = 'https://frozen.capital/presskit/fshare_icon_noBG.png';
       } else if (assetName === 'FBOND') {
         asset = this.FBOND;
-        assetUrl = 'https://frost.finance/presskit/fbond_icon_noBG.png';
+        assetUrl = 'https://frozen.capital/presskit/fbond_icon_noBG.png';
       }
       await ethereum.request({
         method: 'wallet_watchAsset',
@@ -755,7 +755,7 @@ export class FrostFinance {
     let overrides = {
       value: parseUnits(avaxAmount, 18),
     };
-    return await TaxOffice.addLiquidityETHTaxFree(
+    return await TaxOffice.addLiquidityAVAXTaxFree(
       frostAmount,
       frostAmount.mul(992).div(1000),
       parseUnits(avaxAmount, 18).mul(992).div(1000),
@@ -765,7 +765,7 @@ export class FrostFinance {
 
   async quoteFromTraderJoe(tokenAmount: string, tokenName: string): Promise<string> {
     const { TraderJoeRouter } = this.contracts;
-    const { _reserve0, _reserve1 } = await this.FROSTWAVAX_LP.getReserves();
+    const { _reserve0, _reserve1, _blockTimestampLast } = await this.FROSTWAVAX_LP.getReserves();
     let quote;
     if (tokenName === 'FROST') {
       quote = await TraderJoeRouter.quote(parseUnits(tokenAmount), _reserve1, _reserve0);

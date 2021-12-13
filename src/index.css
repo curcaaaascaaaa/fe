@@ -24,7 +24,7 @@ body {
 .MuiTypography-body1,
 .MuiPaper-root,
 .MuiPaper-root h2 {
-  color: #be0011 !important;
+  color: #092E48 !important;
 }
 
 body {
@@ -68,7 +68,7 @@ code {
 }
 
 .wallet-button {
-  color: #be0011 !important;
+  color: #092E48 !important;
   font-family: 'Readex Pro', sans-serif !important;
   font-size: 1.1rem !important;
   text-align: left !important;
@@ -81,7 +81,7 @@ code {
 }
 
 .MuiAlert-filledWarning {
-  background-color: #e84142 !important;
+  background-color: #E54445 !important;
 }
 
 .MuiAlert-message,

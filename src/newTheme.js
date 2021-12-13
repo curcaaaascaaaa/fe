@@ -12,15 +12,15 @@ const newTheme = createMuiTheme({
       paper: 'rgba(255, 255, 255, 0.9)',
     },
     primary: {
-      light: '#e6615f',
-      main: '#e84142',
-      dark: '#be0011',
+      light: '#4BACDE',
+      main: '#044878',
+      dark: '#092E48',
       contrastText: '#000',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
+      light: '#4BACDE',
+      main: '#044878',
+      dark: '#092E48',
       contrastText: '#000',
     },
     action: {
@@ -30,7 +30,7 @@ const newTheme = createMuiTheme({
     },
   },
   typography: {
-    color: '#e84142',
+    color: '#044878',
     fontFamily: ['"Roadex Pro"', 'sans-serif'].join(','),
   },
 });

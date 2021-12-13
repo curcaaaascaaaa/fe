@@ -1,11 +1,17 @@
 import React from 'react';
 
-//Graveyard ecosystem logos
-import frostLogo from '../../assets/img/crypto_snow_cash.svg';
-import fShareLogo from '../../assets/img/crypto_snow_share.svg';
-import frostLogoPNG from '../../assets/img/crypto_frost_cash.f2b44ef4.png';
-import fShareLogoPNG from '../../assets/img/crypto_frost_share.bf1a6c52.png';
-import fBondLogo from '../../assets/img/crypto_snow_bond.svg';
+//Frozen ecosystem logos
+// import frostLogo from '../../assets/img/crypto_snow_cash.svg';
+// import fShareLogo from '../../assets/img/crypto_snow_share.svg';
+// import frostLogoPNG from '../../assets/img/crypto_frost_cash.f2b44ef4.png';
+// import fShareLogoPNG from '../../assets/img/crypto_frost_share.bf1a6c52.png';
+// import fBondLogo from '../../assets/img/crypto_snow_bond.svg';
+
+import frostLogo from '../../assets/img/frost.png';
+import fShareLogo from '../../assets/img/fshare.png';
+import frostLogoPNG from '../../assets/img/frost.png';
+import fShareLogoPNG from '../../assets/img/fshare.png';
+import fBondLogo from '../../assets/img/fbond.png';
 
 import frostAvaxLpLogo from '../../assets/img/frost_avax_lp.svg';
 import fshareAvaxLpLogo from '../../assets/img/fshare_avax_lp.svg';

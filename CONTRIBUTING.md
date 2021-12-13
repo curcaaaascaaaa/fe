@@ -1,4 +1,4 @@
-# Contributing to [Frost.Fiance](https://frost.finance)
+# Contributing to [Frost.Fiance](https://frozen.capital)
 
 🎉 First off all, thanks for taking the time to contribute! 🎉
 

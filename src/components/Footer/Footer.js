@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '15px',
     width: '100%',
     color: 'white',
-    backgroundColor: '#e84142',
+    backgroundColor: '#044878',
     textAlign: 'center',
     height: '1.3rem',
     [theme.breakpoints.down('xs')]: {
@@ -78,7 +78,7 @@ const Footer = () => {
             >
               <img alt="youtube" src={YoutubeImage} className={classes.img} />
             </a>
-            <a href="http://discord.frost.finance/" rel="noopener noreferrer" target="_blank" className={classes.link}>
+            <a href="http://discord.gg/frozencapital/" rel="noopener noreferrer" target="_blank" className={classes.link}>
               <img alt="discord" src={DiscordImage} className={classes.img} />
             </a>
           </Grid>
