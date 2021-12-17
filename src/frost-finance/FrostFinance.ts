@@ -1,9 +1,9 @@
 // import { Fetcher, Route, Token } from '@uniswap/sdk';
 // import { Fetcher as FetcherSpirit, Token as TokenSpirit } from '@spiritswap/sdk';
 // import { Fetcher, Route, Token } from '@spookyswap/sdk';
-import { Fetcher as FetcherSpirit, Token as TokenSpirit } from '@traderjoe-xyz/sdk';
-import { Fetcher, Route, Token } from '@traderjoe-xyz/sdk';
+import { TokenAmount, Fetcher as FetcherSpirit, Token as TokenSpirit, Pair } from '@traderjoe-xyz/sdk';
 import { Configuration } from './config';
+import { Fetcher, Route, Token } from '@traderjoe-xyz/sdk';
 import { ContractName, TokenStat, AllocationTime, LPStat, Bank, PoolStats, FShareSwapperStat } from './types';
 import { BigNumber, Contract, ethers, EventFilter } from 'ethers';
 import { decimalToBalance } from './ether-utils';
@@ -488,6 +488,7 @@ export class FrostFinance {
   }
 
   async getTokenPriceFromTraderJoe(tokenContract: ERC20): Promise<string> {
+    console.log('running');
     const ready = await this.provider.ready;
     if (!ready) return;
     const { chainId } = this.config;
@@ -495,8 +496,19 @@ export class FrostFinance {
 
     const wavax = new Token(chainId, WAVAX[0], WAVAX[1]);
     const token = new Token(chainId, tokenContract.address, tokenContract.decimal, tokenContract.symbol);
+    console.log(token)
     try {
-      const wavaxToToken = await Fetcher.fetchPairData(wavax, token, this.provider);
+      if (token.address == '0x1964c98b4a8962039909a11f177a4e2D0c6c6990') {
+        var address = '0x6af7503fc3573dfca60ea602b2de58358fe0843e';
+      }
+      else if (token.address == "0x49d91B709f4221111aee8CE9E673bf341b6370C8") {
+        var address = '0x2b7b5e9c0520a19c6cf4f42c3a2747bee7625e66';
+      }
+      const [reserves0, reserves1] = await new Contract(address, IUniswapV2PairABI, this.provider).getReserves();
+      const balances = wavax.sortsBefore(token) ? [reserves0, reserves1] : [reserves1, reserves0]
+
+      // const wavaxToToken = await Fetcher.fetchPairData(token, wavax, this.provider);
+      const wavaxToToken = new Pair(new TokenAmount(wavax, balances[0]), new TokenAmount(token, balances[1]), wavax.chainId)
       const priceInBUSD = new Route([wavaxToToken], token);
 
       return priceInBUSD.midPrice.toFixed(4);

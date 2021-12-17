@@ -12,7 +12,7 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'https://api.avax-test.network/ext/bc/C/rpc',
     deployments: require('./frost-finance/deployments/deployments.testing.json'),
     externalTokens: {
-      WAVAX: ['0xd00ae08403b9bbb9124bb305c09058e32c39a48c', 18],
+      WAVAX: ['0xd00ae08403B9bbb9124bB305C09058E32C39A48c', 18],
       LINK: ['0x0b9d5d9136855f6fec3c0993fee6e9ce8a297846', 18],
       JOE: ['0xa1d923f6b52a1f3938f1f9bc0f5022ea109865b6', 18],
       USDTE: ['0x627e29C1854897B50F0cCeFf2f9A1e769d2be1AA', 18],
@@ -32,12 +32,12 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'https://api.avax.network/ext/bc/C/rpc',
     deployments: require('./frost-finance/deployments/deployments.mainnet.json'),
     externalTokens: {
-      WAVAX: ['0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7', 18],
+      WAVAX: ['0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7', 18],
       LINK: ['0xc7198437980c041c805a1edcba50c1ce5db95118', 18],
       JOE: ['0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd', 18],
-      'USDT-AVAX-LP': ['0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c', 18],
-      'FROST-AVAX-LP': ['0x2A651563C9d3Af67aE0388a5c8F89b867038089e', 18],
-      'FSHARE-AVAX-LP': ['0x4733bc45eF91cF7CcEcaeeDb794727075fB209F2', 18],
+      'FROST-AVAX-LP': ['0x2E02539203256c83c7a9F6fA6f8608A32A2b1Ca2', 18],
+      'FSHARE-AVAX-LP': ['0x2A651563C9d3Af67aE0388a5c8F89b867038089e', 18],
+      'USDT-AVAX-LP': ['0xeD8CBD9F0cE3C6986b22002F03c6475CEb7a6256', 18],
     },
     baseLaunchDate: new Date('2021-06-02 13:00:00Z'),
     bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),
@@ -129,4 +129,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   },
 };
 
-export default configurations[process.env.NODE_ENV || 'development'];
+export default configurations['development'];

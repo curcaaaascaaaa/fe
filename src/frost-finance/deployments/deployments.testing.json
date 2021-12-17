@@ -7980,7 +7980,7 @@
     ]
   },
   "zapper": {
-    "address": "0x8bb1fe7a50082623b372d857b4d07911c786a3e9",
+    "address": "0xb8659554cD96DdF5A1C41827e1AEc5DE5A6b92D1",
     "abi": [
       {
         "inputs": [
@@ -8447,7 +8447,7 @@
     ]
   },
   "TaxOffice": {
-    "address": "0xfA322a7F30e5cb6ab4829da2d9d3bC9fD19f129F",
+    "address": "0xf49E60dbb59EB3E6457aeAb65dC796D892a7858F",
     "abi": [
       {
         "anonymous": false,
