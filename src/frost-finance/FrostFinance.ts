@@ -96,15 +96,15 @@ export class FrostFinance {
   //===================================================================
 
   async getFrostStat(): Promise<TokenStat> {
-    const { FrostAvaxRewardPool, FrostAvaxLpFrostRewardPool, FrostAvaxLpFrostRewardPoolOld } = this.contracts;
+    const { FrostAvaxLpFrostRewardPool, FrostWavaxGenesisRewardPool } = this.contracts;
     const supply = await this.FROST.totalSupply();
     const frostRewardPoolSupply = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPool.address);
-    const frostRewardPoolSupply2 = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPool.address);
-    const frostRewardPoolSupplyOld = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPoolOld.address);
-    const frostCirculatingSupply = supply
-      .sub(frostRewardPoolSupply)
-      .sub(frostRewardPoolSupply2)
-      .sub(frostRewardPoolSupplyOld);
+    const genesisRewardPoolSupply = await this.FROST.balanceOf(FrostWavaxGenesisRewardPool.address)
+    //const frostRewardPoolSupply2 = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPool.address);
+    //const frostRewardPoolSupplyOld = await this.FROST.balanceOf(FrostAvaxLpFrostRewardPoolOld.address);
+    const frostCirculatingSupply = supply.sub(frostRewardPoolSupply).sub(genesisRewardPoolSupply);
+      //.sub(frostRewardPoolSupply2)
+      //.sub(frostRewardPoolSupplyOld);
     const priceInAVAX = await this.getTokenPriceFromTraderJoe(this.FROST);
     const priceOfOneAVAX = await this.getWAVAXPriceFromTraderJoe();
     const priceOfFrostInDollars = (Number(priceInAVAX) * Number(priceOfOneAVAX)).toFixed(2);
@@ -133,6 +133,9 @@ export class FrostFinance {
 
     const avaxAmountBN = await this.AVAX.balanceOf(lpToken.address);
     const avaxAmount = getDisplayBalance(avaxAmountBN, 18);
+
+    console.log(avaxAmount);
+
     const tokenAmountInOneLP = Number(tokenAmount) / Number(lpTokenSupply);
     const avaxAmountInOneLP = Number(avaxAmount) / Number(lpTokenSupply);
     const lpTokenPrice = await this.getLPTokenPrice(lpToken, token0, isFrost);
